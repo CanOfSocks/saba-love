@@ -3,7 +3,7 @@ from flask import Flask, render_template, request, redirect, url_for, make_respo
 from flask_sqlalchemy import SQLAlchemy
 from flask_caching import Cache
 from sqlalchemy import func
-from ip_to_country import IpToCountry
+import maxminddb
 from dotenv import load_dotenv
 
 app = Flask(__name__)
@@ -21,10 +21,10 @@ cache = Cache(app)
 
 db = SQLAlchemy(app)
 
-ip_lookup = IpToCountry()
-
 # Path to local MaxMind DB
 GEOIP_DB_PATH = 'ip-to-country.mmdb'
+
+geo_ip_resolver = maxminddb.open_database(GEOIP_DB_PATH)
 
 # --- Database Model ---
 class Clicks(db.Model):
@@ -42,7 +42,7 @@ def get_ip():
 def get_country_from_ip(ip_address):
     """Returns (code, name). Defaults to ('XX', 'Atlantis') if unknown."""
     try:
-        country_info = ip_lookup.ip_to_country(ip_address) or {}
+        country_info = geo_ip_resolver.get(ip_address) or {}
         return country_info.get("country_code", 'XX'), country_info.get("country_name", 'Atlantis')
     except Exception:
         return 'XX', 'Atlantis'

@@ -2,6 +2,6 @@ Flask
 Flask-SQLAlchemy
 Flask-Caching
 pymysql
-ip-to-country
+maxminddb
 pip
 python-dotenv
