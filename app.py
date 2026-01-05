@@ -3,7 +3,7 @@ from flask import Flask, render_template, request, redirect, url_for, make_respo
 from flask_sqlalchemy import SQLAlchemy
 from flask_caching import Cache
 from sqlalchemy import func
-import geoip2.database
+from ip_to_country import IpToCountry
 from dotenv import load_dotenv
 
 app = Flask(__name__)
@@ -20,6 +20,8 @@ app.config['CACHE_DEFAULT_TIMEOUT'] = 10
 cache = Cache(app)
 
 db = SQLAlchemy(app)
+
+ip_lookup = IpToCountry()
 
 # Path to local MaxMind DB
 GEOIP_DB_PATH = 'ip-to-country.mmdb'
@@ -40,9 +42,8 @@ def get_ip():
 def get_country_from_ip(ip_address):
     """Returns (code, name). Defaults to ('XX', 'Atlantis') if unknown."""
     try:
-        with geoip2.database.Reader(GEOIP_DB_PATH) as reader:
-            response = reader.country(ip_address)
-            return response.country.iso_code, response.country.name
+        country_info = ip_lookup.ip_to_country(ip_address) or {}
+        return country_info.get("country_code", 'XX'), country_info.get("country_name", 'Atlantis')
     except Exception:
         return 'XX', 'Atlantis'
 

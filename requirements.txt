@@ -2,6 +2,6 @@ Flask
 Flask-SQLAlchemy
 Flask-Caching
 pymysql
-geoip2
+ip-to-country
 pip
 python-dotenv
