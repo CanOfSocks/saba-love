@@ -1,0 +1,143 @@
+:root {
+    --deep-blue: #001f3f;
+    --ocean-blue: #0074D9;
+    --aqua: #7FDBFF;
+    --sand: #FFDC00;
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    font-family: 'Verdana', sans-serif;
+    background-color: var(--deep-blue);
+    color: white;
+    box-sizing: border-box; /* Ensures padding doesn't affect width calculations */
+}
+
+/* Wrapper to handle the full height of the viewport 
+   and push footer to the bottom 
+*/
+.ocean-background {
+    background: linear-gradient(to bottom, #001f3f 0%, #006699 100%);
+    min-height: 100vh; /* Minimum 100% of Viewport Height */
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    text-align: center;
+    padding: 1.5rem;
+    background-color: rgba(0,0,0,0.2);
+    flex-shrink: 0; /* Prevents header from shrinking */
+}
+
+/* The Container takes all available free space (flex: 1)
+   and centers its children (the button zone) 
+*/
+.container {
+    flex: 1; /* Grow to fill space between header and footer */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centers Vertically */
+    align-items: center;     /* Centers Horizontally */
+    padding: 20px;
+    width: 100%;
+    box-sizing: border-box; 
+}
+
+/* The actual box containing the button */
+.click-zone {
+    text-align: center;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 3rem 4rem; /* Larger padding for a substantial look */
+    border-radius: 20px;
+    backdrop-filter: blur(5px);
+    border: 1px solid var(--aqua);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    max-width: 90%;
+}
+
+h1 {
+    margin: 0;
+    font-size: 2.5rem;
+    text-shadow: 2px 2px 4px #000;
+}
+
+.counter {
+    font-size: 4rem; /* Made slightly bigger */
+    color: var(--sand);
+    font-weight: bold;
+    display: block;
+    margin: 20px 0;
+    text-shadow: 0 0 10px rgba(255, 220, 0, 0.5);
+}
+
+.fish-button {
+    background-color: #ff4136;
+    color: white;
+    border: none;
+    padding: 20px 40px;
+    font-size: 1.5rem;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    transition: transform 0.1s, background-color 0.2s;
+    margin-top: 10px;
+}
+
+.fish-button:hover {
+    background-color: #ff6057;
+    transform: scale(1.05);
+}
+
+.fish-button:active {
+    transform: scale(0.95);
+}
+
+.nav-btn {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 8px 16px;
+    background-color: var(--ocean-blue);
+    color: white;
+    text-decoration: none;
+    border-radius: 20px;
+    font-weight: bold;
+    border: 2px solid white;
+    font-size: 0.9rem;
+}
+
+.nav-btn:hover {
+    background-color: var(--aqua);
+    color: var(--deep-blue);
+}
+
+.checkbox-wrapper {
+    margin-bottom: 20px;
+    font-size: 1.1rem;
+    color: var(--aqua);
+}
+
+#map {
+    height: 60vh; /* Map takes 60% of screen height */
+    width: 90%;
+    max-width: 1000px;
+    border: 2px solid var(--aqua);
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 116, 217, 0.3);
+}
+
+footer {
+    text-align: center;
+    padding: 1rem;
+    font-size: 0.8rem;
+    opacity: 0.7;
+    flex-shrink: 0; /* Prevents footer from shrinking */
+    background-color: rgba(0,0,0,0.1);
+}
+
+footer a {
+    color: var(--aqua);
+}

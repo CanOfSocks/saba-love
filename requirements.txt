@@ -1,0 +1,7 @@
+Flask
+Flask-SQLAlchemy
+Flask-Caching
+pymysql
+geoip2
+pip
+python-dotenv

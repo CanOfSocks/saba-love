@@ -1,0 +1,124 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div id="map"></div>
+
+<script>
+    // 1. Prepare Data from Flask
+    // We expect map_data to be { 'US': {name: 'United States', count: 10}, 'XX': {name: 'Atlantis', count: 5} ... }
+    const rawData = {{ map_data | tojson }};
+    
+    const locations = [];
+    const zValues = [];
+    const textValues = [];
+    
+    let atlantisCount = 0;
+
+    // Process data: Split real countries from Atlantis (XX)
+    for (const [code, data] of Object.entries(rawData)) {
+        if (code === 'XX') {
+            atlantisCount = data.count;
+        } else {
+            // We use Country Names for Plotly 'locationmode' to handle ISO-2 codes automatically
+            // Alternatively, you can pass ISO-3 from Python if precision is critical
+            locations.push(data.name); 
+            zValues.push(data.count);
+            textValues.push(data.name);
+        }
+    }
+
+    // --- Trace 1: The World Map (Choropleth) ---
+    const worldTrace = {
+        type: 'choropleth',
+        locationmode: 'country names', // Matches names like "United States", "France"
+        locations: locations,
+        z: zValues,
+        text: textValues,
+        colorscale: [
+            [0, '#f7fbff'],
+            [0.2, '#deebf7'],
+            [0.4, '#9ecae1'],
+            [0.6, '#4292c6'],
+            [0.8, '#2171b5'],
+            [1, '#084594']
+        ],
+        autocolorscale: false,
+        reversescale: false,
+        marker: {
+            line: {
+                color: 'rgb(255,255,255)',
+                width: 0.5
+            }
+        },
+        colorbar: {
+            title: 'Fish Fed',
+            thickness: 10,
+            len: 0.5,
+            x: 0.9,
+            tickfont: { color: 'white' },
+            titlefont: { color: 'white' }
+        }
+    };
+
+    // --- Trace 2: Atlantis (Trident Island) ---
+    // We use a custom SVG path for the marker symbol to create the Trident shape
+    // Path represents a simple trident shape
+    const tridentPath = 'M 0 2 L 0 5 M -1 3 L -1 4 Q -1 5 0 5 Q 1 5 1 4 L 1 3 M 0 5 L 0 8'; 
+    // Simplified Trident/Fork SVG path (scaled appropriately in symbol dict)
+    
+    const atlantisTrace = {
+        type: 'scattergeo',
+        mode: 'markers+text',
+        lat: [32],
+        lon: [-40],
+        text: [`Atlantis<br>Clicks: ${atlantisCount}`],
+        textposition: 'top center',
+        hoverinfo: 'text',
+        name: 'Atlantis',
+        marker: {
+            size: 35,
+            symbol: 'star-diamond',  // built-in symbol closest to a trident-ish shape
+            color: '#b000b0',
+            line: { color: '#ff00ff', width: 2 }
+        }
+    };
+
+    const layout = {
+        title: {
+            text: 'Saba Love Map',
+            font: {
+                family: 'Verdana',
+                size: 24,
+                color: '#ffffff'
+            }
+        },
+        geo: {
+            showframe: false,
+            showcoastlines: true,
+            coastlinecolor: '#444',
+            projection: {
+                type: 'natural earth'
+            },
+            // Ocean Color
+            showocean: true,
+            oceancolor: '#001f3f', // Matches CSS deep blue
+            // Land Color (for 0 click countries)
+            showland: true,
+            landcolor: '#003366', 
+            bgcolor: 'rgba(0,0,0,0)', // Transparent
+        },
+        paper_bgcolor: 'rgba(0,0,0,0)', // Transparent container
+        plot_bgcolor: 'rgba(0,0,0,0)',
+        margin: { l: 0, r: 0, t: 50, b: 0 },
+        height: 600,
+        // Add the custom Trident shape as a layout shape on top of the map coordinates?
+        // Note: Layout shapes in Plotly Geo are tricky. 
+        // We will rely on the ScatterGeo trace above for the "Island".
+    };
+
+    // Custom Config to make it static-ish
+    const config = { responsive: true, displayModeBar: false };
+
+    Plotly.newPlot('map', [worldTrace, atlantisTrace], layout, config);
+</script>
+{% endblock %}

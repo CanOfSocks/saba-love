@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="click-zone">
+    <h2>Global Saba Lover Count: <span class="counter">{{ total_clicks }}</span></h2>
+    
+    <form action="{{ url_for('index') }}" method="POST">
+        <div class="checkbox-wrapper">
+            <input type="checkbox" id="anonymous" name="anonymous">
+            <label for="anonymous">I'm from Atlantis (anonymous)</label>
+        </div>
+        
+        <button type="submit" class="fish-button">
+            I LOVE SABA! 🐟
+        </button>
+    </form>
+</div>
+{% endblock %}

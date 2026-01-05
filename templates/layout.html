@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fish Clicker</title>
+    <script src="https://cdn.plot.ly/plotly-3.3.1.min.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="ocean-background">
+        <header>
+            <h1>🐟 Man I Love Saba 🌊</h1>
+            <nav>
+                <a href="{{ url_for('index') }}" class="nav-btn">Lighthouse 💡</a>
+                <a href="{{ url_for('world_map') }}" class="nav-btn">World Currents 🏖️</a>
+            </nav>
+        </header>
+
+        <main class="container">
+            {% block content %}{% endblock %}
+        </main>
+
+        <footer>
+            <p>This site uses a <a href="https://www.iplocate.io/" target="_blank" rel="noopener noreferrer">https://www.iplocate.io</a> database to determine country from IP for the map. Country determination is done using a downloaded database only and IPs are not saved.</p>
+        </footer>
+    </div>
+    
+    {% block scripts %}{% endblock %}
+</body>
+</html>
