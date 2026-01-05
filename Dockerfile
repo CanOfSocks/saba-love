@@ -10,4 +10,4 @@ RUN pip install --no-cache-dir gunicorn
 
 RUN chmod +x /app/run.sh
 
-ENTRYPOINT [ "sh", "-c", "/app/run.sh" ]
+CMD [ "sh", "-c", "/app/run.sh" ]
