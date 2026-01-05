@@ -13,6 +13,10 @@ load_dotenv()
 # Update with your actual DB credentials
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL') 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {
+    'pool_pre_ping': True,
+    'pool_recycle': 280,  # Recycle connections before the DB timeout (usually 300s)
+}
 
 # Cache Configuration (Simple in-memory cache)
 app.config['CACHE_TYPE'] = 'SimpleCache'
@@ -121,4 +125,5 @@ def favicon():
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
+
     app.run(host='0.0.0.0', port=os.getenv("FLASK_RUN_PORT", 5000))
