@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template, request, redirect, url_for, make_response
+from flask import Flask, render_template, request, redirect, url_for, make_response, send_from_directory
 from flask_sqlalchemy import SQLAlchemy
 from flask_caching import Cache
 from sqlalchemy import func
@@ -107,6 +107,12 @@ def add_header(response):
     if request.path.startswith('/static'):
         response.cache_control.max_age = 1800 # 30 minutes
         response.cache_control.public = True
+    return response
+
+@app.route('/favicon.ico')
+def favicon():
+    response = make_response(send_from_directory('static', 'favicon.ico'))
+    response.headers['Cache-Control'] = 'public, max-age=3600, must-revalidate'
     return response
 
 if __name__ == '__main__':
