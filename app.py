@@ -35,6 +35,8 @@ class Clicks(db.Model):
 # --- Helpers ---
 def get_ip():
     """Get IP considering Nginx Reverse Proxy"""
+    if request.headers.getlist("CF-Connecting-IP"):
+        return request.headers.getlist("CF-Connecting-IP")[0]
     if request.headers.getlist("X-Forwarded-For"):
         return request.headers.getlist("X-Forwarded-For")[0]
     return request.remote_addr
