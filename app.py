@@ -2,6 +2,7 @@ import os
 from flask import Flask, render_template, request, redirect, url_for, make_response, send_from_directory
 from flask_sqlalchemy import SQLAlchemy
 from flask_caching import Cache
+from flask_compress import Compress
 from sqlalchemy import func
 import maxminddb
 from dotenv import load_dotenv
@@ -22,6 +23,8 @@ app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {
 app.config['CACHE_TYPE'] = 'SimpleCache'
 app.config['CACHE_DEFAULT_TIMEOUT'] = 10
 cache = Cache(app)
+app.config['COMPRESS_MIN_SIZE'] = 5000
+Compress(app)
 
 db = SQLAlchemy(app)
 

@@ -5,3 +5,4 @@ pymysql
 maxminddb
 pip
 python-dotenv
+flask-compress
