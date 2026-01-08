@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fish Clicker</title>
-    <script src="https://cdn.plot.ly/plotly-3.3.1.min.js"></script>
+    
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
@@ -20,6 +20,18 @@
         <main class="container">
             {% block content %}{% endblock %}
         </main>
+
+        <div class="social-bar">
+            <h2 class="social-header">Enjoy Saba for yourself!</h2>
+            <div class="social-links">
+                <a href="https://youtube.com/@SamekoSaba" target="_blank" rel="noopener noreferrer">
+                    <img src="https://cdn.simpleicons.org/youtube" alt="YouTube" class="social-icon" loading="lazy">
+                </a>
+                <a href="https://x.com/samekosaba" target="_blank" rel="noopener noreferrer">
+                    <img src="https://cdn.simpleicons.org/x" alt="Twitter/X" class="social-icon" loading="lazy">
+                </a>
+            </div>
+        </div>
 
         <footer>
             <p>This site uses a <a href="https://www.iplocate.io/" target="_blank" rel="noopener noreferrer">https://www.iplocate.io</a> database to determine country from IP for the map. Country determination is done using a downloaded database only and IPs are not saved.</p>

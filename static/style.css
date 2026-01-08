@@ -129,15 +129,58 @@ h1 {
     box-shadow: 0 0 20px rgba(0, 116, 217, 0.3);
 }
 
+
+
+.social-bar {
+    display: flex;
+    flex-direction: column; /* Stacks header above icons */
+    align-items: center;    /* Centers everything horizontally */
+    gap: 15px;              /* Space between header and icons */
+    padding: 30px 0;
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+/* This inner container keeps the icons side-by-side */
+.social-links {
+    display: flex;
+    flex-direction: row;    /* Keeps icons in a line */
+    gap: 25px;              /* Space between the two icons */
+}
+
+.social-header {
+    margin: 0;
+    color: var(--aqua);
+    font-size: 1.5rem;
+}
+
+.social-icon {
+    width: 64px;
+    height: 64px;
+    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.3s;
+    /* Keeps icons white/clean initially */
+    filter: brightness(0) invert(1) opacity(0.8);
+}
+
+.social-icon:hover {
+    transform: scale(1.2) translateY(-5px);
+    filter: brightness(1) invert(0) opacity(1); /* Reveals original brand colors on hover */
+}
+
+
 footer {
     text-align: center;
-    padding: 1rem;
+    padding: 1.5rem;
     font-size: 0.8rem;
     opacity: 0.7;
-    flex-shrink: 0; /* Prevents footer from shrinking */
-    background-color: rgba(0,0,0,0.1);
+    flex-shrink: 0;
+    background-color: rgba(0,0,0,0.2);
 }
 
 footer a {
     color: var(--aqua);
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
 }
